@@ -5,6 +5,7 @@ sys.path.insert(1, './_script/functions')
 import setup
 import malfilereader
 import response
+import lexer
 
 def main():
     _response = setup.main()
@@ -13,6 +14,7 @@ def main():
     
     _file = malfilereader.read(sys.argv[1])
     # print(_file)
+    tokenFile = lexer.main(_file)
 
     return response.create(200)
 
