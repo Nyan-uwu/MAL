@@ -6,6 +6,10 @@ import setup
 import malfilereader
 import response
 import lexer
+import run
+
+sys.path.insert(1, './_script/classes')
+import memory
 
 def main():
     _response = setup.main()
@@ -15,8 +19,15 @@ def main():
     _file = malfilereader.read(sys.argv[1])
     # print(_file)
     tokenFile = lexer.main(_file)
+    # print(tokenFile)
+    # for t in tokenFile.tokens:
+    #     print(t)
 
-    return response.create(200)
+    mem = memory.Memory()
+    mem = run.run(mem, tokenFile)
+    print(mem.mem)
+
+    return response.create(200, "Run Successful")
 
 exitresponse = main()
 print(exitresponse)

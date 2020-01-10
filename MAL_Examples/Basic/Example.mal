@@ -1,6 +1,5 @@
-mov 100 $0
-add 100 $0
-mov $0 $1
-teq 200 $0
-+ mov 1 $0
-- mov 0 $0
+MOV 100 $0
+MOV 200 $1
+MOV $0 $2
+MOV 300 $0
+MOV $0 $3
