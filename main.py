@@ -26,6 +26,7 @@ def main():
     mem = memory.Memory()
     mem = run.run(mem, tokenFile)
     print(mem.mem)
+    print(tokenFile.labels)
 
     return response.create(200, "Run Successful")
 
