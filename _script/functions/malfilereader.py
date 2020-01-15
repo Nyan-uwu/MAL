@@ -1,7 +1,7 @@
 def read(_filename):
     file  = open(_filename, "r").read()
     sfile = file.split("\n")
-    print(sfile)
+    # print(sfile)
     ffile = []
     for line in sfile:
         ffile.append(__cleanline__(line.split(" ")))

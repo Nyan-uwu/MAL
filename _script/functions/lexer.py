@@ -34,6 +34,8 @@ def main(inp):
                 tok = linetok[indx].lower()
                 if tok[0] == syntax.memloc:
                     values["params"].append(tokens.MemLoc({"name":"memloc", "value":int(tok[1:])}))
+                elif tok == syntax.uinp:
+                    values["params"].append(tokens.Uinp({"name":"uinp", "value":None}))
                 else:
                     values["params"].append(tokens.Int({"name":"int", "value":int(tok)}))
 
@@ -44,7 +46,7 @@ def main(inp):
                     values["params"].append(tokens.MemLoc({"name":"memloc", "value":int(tok[1:])}))
                 else:
                     res = response.create("601", "Cannot move value to a non-memorylocation")
-                    print(res)
+                    # print(res)
                     raise Exception(res["message"])
 
                 tokenFile.tokens.append(tokens.Mov(values))
@@ -65,6 +67,8 @@ def main(inp):
                 tok = linetok[indx].lower()
                 if tok[0] == syntax.memloc:
                     values["params"].append(tokens.MemLoc({"name":"memloc", "value":int(tok[1:])}))
+                elif tok == syntax.uinp:
+                    values["params"].append(tokens.Uinp({"name":"uinp", "value":None}))
                 else:
                     values["params"].append(tokens.Int({"name":"int", "value":int(tok)}))
 
@@ -73,6 +77,8 @@ def main(inp):
                 tok = linetok[indx].lower()
                 if tok[0] == syntax.memloc:
                     values["params"].append(tokens.MemLoc({"name":"memloc", "value":int(tok[1:])}))
+                elif tok == syntax.uinp:
+                    values["params"].append(tokens.Uinp({"name":"uinp", "value":None}))
                 else:
                     values["params"].append(tokens.Int({"name":"int", "value":int(tok)}))
             

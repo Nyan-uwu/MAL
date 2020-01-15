@@ -9,3 +9,5 @@ ontrue = "!+"
 ontrueend = "+!"
 onfalse = "!-"
 onfalseend = "-!"
+
+uinp = "uinp"

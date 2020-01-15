@@ -21,7 +21,8 @@ def run(memory, tokenFile):
             intrue = False
         elif tok.name == "truestart":
             if intrue:
-                print("running true")
+                # print("running true")
+                pass
             elif not intrue:
                 indx = tok.value
         elif tok.name == "falseend":

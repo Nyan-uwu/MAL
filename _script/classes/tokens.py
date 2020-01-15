@@ -37,6 +37,8 @@ class Mov(Master):
             memory.write(self.params[0].value, self.params[1].value)
         elif self.params[0].name == "memloc":
             memory.write(memory.read(self.params[0].value), self.params[1].value)
+        elif self.params[0].name == "uinp":
+            memory.write(Uinp.getInput("Enter Value: "), self.params[1].value)
             
         return memory
 
@@ -77,12 +79,12 @@ class Test(Master):
         else:
             val2 = self.params[1].value
 
-        print("params")
-        for p in self.params:
-            print(p)
+        # print("params")
+        # for p in self.params:
+        #     print(p)
         
         if self.name == "teq":
-            print("TEQ {} == {}".format(val1, val2))
+            # print("TEQ {} == {}".format(val1, val2))
             return val1 == val2
         elif self.name == "tgt":
             return val1 > val2
@@ -92,6 +94,12 @@ class Test(Master):
             return val1 < val2
         elif self.name == "tlte":
             return val1 <= val2
+
+class Uinp(Master):
+    def __str__(self):
+        return "User Input"
+    def getInput(string):
+        return int(input(string))
 
 class IfTrueBlockStart(Master):
     def __str__(self):
@@ -137,3 +145,5 @@ def findRelatedStartBlock_False(tokenArr, startPos):
             counter += 1
 
         pos -= 1
+
+Uinp.getInput = staticmethod(Uinp.getInput)
