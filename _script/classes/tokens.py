@@ -1,5 +1,5 @@
 import sys
-
+import time
 sys.path.insert(1, '../functions')
 import response
 
@@ -38,9 +38,82 @@ class Mov(Master):
         elif self.params[0].name == "memloc":
             memory.write(memory.read(self.params[0].value), self.params[1].value)
         elif self.params[0].name == "uinp":
-            memory.write(Uinp.getInput("Enter Value: "), self.params[1].value)
+            memory.write(int(Uinp.getInput("Enter Value: ")), self.params[1].value)
             
         return memory
+
+class Add(Master):
+    def __str__(self):
+        return "Add: {}".format(self.params[0].value, self.params[1].value)
+    def run(self, memory):
+        # print(self.params[0].value, "+", self.params[1].value)
+        if self.params[0].name == "int":
+            memory.write(self.params[0].value+memory.read(self.params[1].value), self.params[1].value)
+        elif self.params[0].name == "memloc":
+            memory.write(memory.read(self.params[0].value)+memory.read(self.params[1].value), self.params[1].value)
+        elif self.params[0].name == "uinp":
+            memory.write(int(Uinp.getInput("Enter Value: "))+memory.read(self.params[1].value), self.params[1].value)
+        
+        return memory
+
+class Sub(Master):
+    def __str__(self):
+        return "Sub: {}".format(self.params[0].value, self.params[1].value)
+    def run(self, memory):
+        # print(self.params[0].value, "-", self.params[1].value)
+        if self.params[0].name == "int":
+            memory.write(memory.read(self.params[1].value)-self.params[0].value, self.params[1].value)
+        elif self.params[0].name == "memloc":
+            memory.write(memory.read(self.params[1].value)-memory.read(self.params[0].value), self.params[1].value)
+        elif self.params[0].name == "uinp":
+            memory.write(memory.read(self.params[1].value)-int(Uinp.getInput("Enter Value: ")), self.params[1].value)
+
+        return memory
+
+class Out(Master):
+    def __str__(self):
+        return "Out: {}".format(self.value)
+    def run(self, memory):
+        res = None
+        if self.params[0].name == "int":
+            res = self.params[0].value
+        elif self.params[0].name == "memloc":
+            res = memory.read(self.params[0].value)
+        elif self.params[0].name == "uinp":
+            res = int(Uinp.getInput("Enter Value: "))
+
+        return res
+
+class Wait(Master):
+    def __str__(self):
+        return "Wait: {}".format(self.value)
+    def run(self, memory):
+        sleepTime = 0
+        if self.params[0].name == "int":
+            sleepTime = self.params[0].value
+        elif self.params[0].name == "memloc":
+            sleepTime = memory.read(self.params[0].value)
+        print("sleep : {}".format(sleepTime))
+        print(memory.mem)
+        time.sleep(sleepTime)
+        return memory
+
+class Memsize(Master):
+    def __str__(self):
+        return "Memsize: {}".format(self.value)
+    def run(self, memory):
+        size = self.params[0].value
+        if len(memory.mem) == size:
+            return memory
+        else:
+            if len(memory.mem) < size:
+                diff = size-len(memory.mem)
+                for i in range(0, diff):
+                    memory.mem.append(0)
+                    return memory
+            elif len(memory.mem) > size:
+                memory.mem = memory.mem[0:size]
+                return memory
 
 class Int(Master):
     def __str__(self):

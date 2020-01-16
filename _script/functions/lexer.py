@@ -1,10 +1,8 @@
 import sys
-
 sys.path.insert(1, './_script/classes')
 import file
 import tokens
 import response
-
 sys.path.insert(1, './_script/resources')
 import syntax
 
@@ -51,9 +49,97 @@ def main(inp):
 
                 tokenFile.tokens.append(tokens.Mov(values))
 
+            elif tok == syntax.add:
+                values["name"] = "add"
+                # Param 1
+                indx += 1
+                tok = linetok[indx].lower()
+                if tok[0] == syntax.memloc:
+                    values["params"].append(tokens.MemLoc({"name":"memloc", "value":int(tok[1:])}))
+                elif tok == syntax.uinp:
+                    values["params"].append(tokens.Uinp({"name":"uinp", "value":None}))
+                else:
+                    values["params"].append(tokens.Int({"name":"int", "value":int(tok)}))
+
+                # Param 2
+                indx += 1
+                tok = linetok[indx].lower()
+                if tok[0] == syntax.memloc:
+                    values["params"].append(tokens.MemLoc({"name":"memloc", "value":int(tok[1:])}))
+                else:
+                    res = response.create("601", "Cannot add value to a non-memorylocation")
+                    # print(res)
+                    raise Exception(res["message"])
+
+                tokenFile.tokens.append(tokens.Add(values))
+
+            elif tok == syntax.sub:
+                values["name"] = "sub"
+                # Param 1
+                indx += 1
+                tok = linetok[indx].lower()
+                if tok[0] == syntax.memloc:
+                    values["params"].append(tokens.MemLoc({"name":"memloc", "value":int(tok[1:])}))
+                elif tok == syntax.uinp:
+                    values["params"].append(tokens.Uinp({"name":"uinp", "value":None}))
+                else:
+                    values["params"].append(tokens.Int({"name":"int", "value":int(tok)}))
+
+                # Param 2
+                indx += 1
+                tok = linetok[indx].lower()
+                if tok[0] == syntax.memloc:
+                    values["params"].append(tokens.MemLoc({"name":"memloc", "value":int(tok[1:])}))
+                else:
+                    res = response.create("601", "Cannot move value to a non-memorylocation")
+                    # print(res)
+                    raise Exception(res["message"])
+
+                tokenFile.tokens.append(tokens.Sub(values))
+
             elif tok[0] == syntax.label:
                 tokenFile.labels.append([tok[1:], len(tokenFile.tokens)])
                 tokenFile.tokens.append(tokens.Label({"name":"label", "value":tok[1:]}))
+
+            elif tok == syntax.wait:
+                values["name"] = "wait"
+                # Param 1
+                indx += 1
+                tok = linetok[indx].lower()
+                if tok[0] == syntax.memloc:
+                    values["params"].append(tokens.MemLoc({"name":"memloc", "value":int(tok[1:])}))
+                else:
+                    values["params"].append(tokens.Int({"name":"int", "value":int(tok)}))
+
+                tokenFile.tokens.append(tokens.Wait(values))
+            
+            elif tok == syntax.memsize:
+                values["name"] = "wait"
+                # Param 1
+                indx += 1
+                tok = linetok[indx].lower()
+                if tok[0] == syntax.memloc:
+                    res = response.create("602", "Cannot Resize Memory To A Value In Memory (CURRENT)")
+                    # print(res)
+                    raise Exception(res["message"])
+                else:
+                    values["params"].append(tokens.Int({"name":"int", "value":int(tok)}))
+
+                tokenFile.tokens.append(tokens.Memsize(values))
+
+            elif tok == syntax.out:
+                values["name"] == "out"
+                # Value 1
+                indx += 1
+                tok = linetok[indx].lower()
+                if tok[0] == syntax.memloc:
+                    values["params"].append(tokens.MemLoc({"name":"memloc", "value":int(tok[1:])}))
+                elif tok == syntax.uinp:
+                    values["params"].append(tokens.Uinp({"name":"uinp", "value":None}))
+                else:
+                    values["params"].append(tokens.Int({"name":"int", "value":int(tok)}))
+
+                tokenFile.tokens.append(tokens.Out(values))
 
             elif tok == syntax.jump:
                 indx += 1

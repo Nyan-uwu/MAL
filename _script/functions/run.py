@@ -1,8 +1,5 @@
 import sys
-
-sys.path.insert(1, './_script/functions')
 import response
-
 sys.path.insert(1, './_script/recources')
 import syntax
 
@@ -17,6 +14,8 @@ def run(memory, tokenFile):
         # print(str(intrue) + ":" + str(infalse))
         if tok.name == "jmp":
             indx = tok.run(tokenFile)
+        elif tok.name == "out":
+            tokenFile.outString += str(chr(tok.run(memory)))
         elif tok.name == "trueend":
             intrue = False
         elif tok.name == "truestart":

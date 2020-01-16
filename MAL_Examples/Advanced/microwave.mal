@@ -1,0 +1,16 @@
+:START
+    # Set Memory to smaller size
+    MEMSIZE 2
+    # Get Time To Cook From User
+    MOV UINP $1
+
+:COUNTDOWN
+    SUB 1 $1
+    TEQ $1 0
+    !+ JMP END +!
+    WAIT 1
+    JMP COUNTDOWN
+
+:END
+    # Send  MAX Value to REG0 to 'unlock door'
+    MOV 100 $0

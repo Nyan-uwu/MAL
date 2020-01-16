@@ -25,6 +25,7 @@ def main():
 
     mem = memory.Memory()
     mem = run.run(mem, tokenFile)
+    print(tokenFile.outString)
     print(mem.mem)
     print(tokenFile.labels)
 

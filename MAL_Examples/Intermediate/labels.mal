@@ -1,0 +1,11 @@
+MOV 10 $1
+MOV 10 $2
+
+:loop
+    TEQ $2 0
+    !+ jmp end +!
+    ADD $1 $0
+    SUB 1 $2
+    jmp loop
+
+:end

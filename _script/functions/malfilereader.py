@@ -10,7 +10,7 @@ def read(_filename):
 def __cleanline__(_lineArr):
     i = len(_lineArr)-1
     while i >= 0:
-        if _lineArr[i] == "    " or _lineArr[i] == " " or _lineArr == "":
-            _lineArr.remove(i)
+        if _lineArr[i] == "":
+            _lineArr.remove("")
         i -= 1
     return _lineArr
